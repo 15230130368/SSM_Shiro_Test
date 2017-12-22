@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zkx.mapper.UserMapper">
+    <resultMap id="userMap" type="user">
+        <id property="id" column="id"/>
+        <result property="username" column="name"/>
+        <result property="password" column="password"/>
+        <result property="salt" column="salt"/>
+    </resultMap>
+    <insert id="addUser" parameterType="user">
+        insert into xt_user(name,password,salt)values(#{username},#{password},#{salt})
+    </insert>
+    <select id="selUserByUsercode" parameterType="string" resultMap="userMap">
+        select * from xt_user where name = #{usercode}
+    </select>
+    <select id="selAllGn" resultType="gn">
+        select * from xt_gn
+    </select>
+    <select id="selAllPersByUserId" parameterType="int" resultType="string">
+        select percode from xt_gn g,xt_author a where g.id = a.gnid and a.userid = #{userid}
+    </select>
+</mapper>
